@@ -1,0 +1,93 @@
+
+########################################################################
+#      Date:           Sat 04 Feb 2023 01:08:21 AM PST
+#    Job ID:           2167379.v-qsvr-1.aidevcloud
+#      User:           u181733
+# Resources:           cput=75:00:00,neednodes=1:ppn=2,nodes=1:ppn=2,walltime=01:00:00
+########################################################################
+
+===============================================================================
+                       Intel(R) Quantum SDK (V1.0)
+===============================================================================
+Processing source file:
+/home/u181733/workspace/new_algo/new_algo_start_here.cpp 
+-------------------------------------------------------------------------------
+Intermediate representation (IR) output file: 
+/home/u181733/workspace/new_algo/new_algo_start_here.ll
+-------------------------------------------------------------------------------
+Transforming IR...
+Validating and processing quantum kernels...
+Printing quantum circuit stats before decomposition to native gates...
+
+ Stats for QBB in quantum_kernel - 'prepare_all()'
+
+	Total number of gates: 3
+		Total number of PrepZ gates: 3
+
+	Approximate depth: 1 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'measure_all()'
+
+	Total number of gates: 3
+		Total number of MeasZ gates: 3
+
+	Approximate depth: 1 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'test_function()'
+
+	Total number of gates: 2
+		Total number of RX gates: 2
+
+	Approximate depth: 1 time units
+		(with an average gate time of 1 time units)
+
+-------------------------------------------------------------------------------
+Optimizing using option 0...
+Printing quantum circuit stats after decomposition to native gates...
+
+ Stats for QBB in quantum_kernel - 'prepare_all()'
+
+	Total number of gates: 3
+		Total number of SpinPrepZ gates: 3
+
+	Approximate depth: 1 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'measure_all()'
+
+	Total number of gates: 3
+		Total number of SpinMeasZ gates: 3
+
+	Approximate depth: 1 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'test_function()'
+
+	Total number of gates: 2
+		Total number of SpinRotXY gates: 2
+
+	Approximate depth: 1 time units
+		(with an average gate time of 1 time units)
+
+-------------------------------------------------------------------------------
+Finalizing quantum IR...
+WARNING: Quantum SDK - Scheduling method is set to 'none'. Ignoring the platform configuration and assuming an all-to-all connectivity for the qubits.
+-------------------------------------------------------------------------------
+Generating quantum object file...
+Compiling and linking to executable...
+Final executable file: 
+/home/u181733/workspace/new_algo/new_algo_start_here
+-------------------------------------------------------------------------------
+/var/spool/torque/mom_priv/jobs/2167379.v-qsvr-1.aidevcloud.SC: line 16: ./new_algo: No such file or directory
+
+########################################################################
+# End of output for job 2167379.v-qsvr-1.aidevcloud
+# Date: Sat 04 Feb 2023 01:08:31 AM PST
+########################################################################
+

@@ -1,0 +1,99 @@
+
+########################################################################
+#      Date:           Tue 31 Jan 2023 12:16:48 PM PST
+#    Job ID:           2160416.v-qsvr-1.aidevcloud
+#      User:           u181733
+# Resources:           cput=75:00:00,neednodes=1:ppn=2,nodes=1:ppn=2,walltime=01:00:00
+########################################################################
+
+===============================================================================
+                       Intel(R) Quantum SDK (Beta Silver)
+===============================================================================
+Processing source file:
+/home/u181733/workspace/qrng.cpp 
+-------------------------------------------------------------------------------
+Intermediate representation (IR) output file: 
+/home/u181733/workspace/qrng.ll
+-------------------------------------------------------------------------------
+Transforming IR...
+Validating and processing quantum kernels...
+Printing quantum circuit stats before decomposition to native gates...
+
+ Stats for QBB in quantum_kernel - 'prepare_all()'
+
+	Total number of gates: 6
+		Total number of PrepZ gates: 6
+
+	Approximate depth: 119 time units
+		(with an average gate time of 119 time units)
+
+
+ Stats for QBB in quantum_kernel - 'superposition_all()'
+
+	Total number of gates: 6
+		Total number of H gates: 6
+
+	Approximate depth: 119 time units
+		(with an average gate time of 119 time units)
+
+
+ Stats for QBB in quantum_kernel - 'measure_all()'
+
+	Total number of gates: 6
+		Total number of MeasZ gates: 6
+
+	Approximate depth: 119 time units
+		(with an average gate time of 119 time units)
+
+-------------------------------------------------------------------------------
+Optimizing using option 0...
+Printing quantum circuit stats after decomposition to native gates...
+
+ Stats for QBB in quantum_kernel - 'prepare_all()'
+
+	Total number of gates: 6
+		Total number of SpinPrepZ gates: 6
+
+	Approximate depth: 119 time units
+		(with an average gate time of 119 time units)
+
+
+ Stats for QBB in quantum_kernel - 'superposition_all()'
+
+	Total number of gates: 12
+		Total number of SpinRotXY gates: 12
+
+	Approximate depth: 398 time units
+		(with an average gate time of 119 time units)
+
+
+ Stats for QBB in quantum_kernel - 'measure_all()'
+
+	Total number of gates: 6
+		Total number of SpinMeasZ gates: 6
+
+	Approximate depth: 119 time units
+		(with an average gate time of 119 time units)
+
+-------------------------------------------------------------------------------
+Finalizing quantum IR...
+-------------------------------------------------------------------------------
+Generating quantum object file...
+Compiling and linking to executable...
+Final executable file: 
+/home/u181733/workspace/qrng
+-------------------------------------------------------------------------------
+------- qubit QRNG state -------
+1
+0
+1
+0
+0
+1
+------- --------------- -------
+
+########################################################################
+# End of output for job 2160416.v-qsvr-1.aidevcloud
+# Date: Tue 31 Jan 2023 12:16:58 PM PST
+########################################################################
+
