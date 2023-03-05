@@ -32,6 +32,12 @@
 *.app
 
 # Additions
+/quantum-examples
+README_SDK_V1.0.md
 *.ll
 *.qs
 
+qkd/qkd
+qrng/qrng
+new_algo/new_algo_start_here
+bell_state/bell_state
