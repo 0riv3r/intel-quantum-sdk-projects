@@ -1,7 +1,7 @@
 
 ########################################################################
-#      Date:           Sat 11 Mar 2023 04:26:49 AM PST
-#    Job ID:           2245538.v-qsvr-1.aidevcloud
+#      Date:           Sat 11 Mar 2023 06:16:10 AM PST
+#    Job ID:           2245882.v-qsvr-1.aidevcloud
 #      User:           u181733
 # Resources:           cput=75:00:00,neednodes=1:ppn=2,nodes=1:ppn=2,walltime=01:00:00
 ########################################################################
@@ -70,11 +70,11 @@ Compiling and linking to executable...
 Final executable file: 
 /home/u181733/intel-quantum-sdk-projects/bell_state/bell_state
 -------------------------------------------------------------------------------
-The Control Qubit is: 0
-The Target Qubit is: 0
+The Control Qubit is: 1
+The Target Qubit is: 1
 
 ########################################################################
-# End of output for job 2245538.v-qsvr-1.aidevcloud
-# Date: Sat 11 Mar 2023 04:27:00 AM PST
+# End of output for job 2245882.v-qsvr-1.aidevcloud
+# Date: Sat 11 Mar 2023 06:16:20 AM PST
 ########################################################################
 

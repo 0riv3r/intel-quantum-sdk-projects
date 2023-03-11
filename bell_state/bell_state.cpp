@@ -27,68 +27,75 @@
 
 */
 
-/* Gate definitions and key words */
+/* Gate definitions and keywords */
 #include <clang/Quantum/quintrinsics.h>
 /* Quantum Runtime Library APIs */
 #include <quantum.hpp>
 #include <iostream>
+
 /* Declare 2 qubits */
 qbit q[2];
-/* The quantum logic must be in a function with the keyword quantum_kernel */
-/* pre-pended to the signature */
+
+/* 
+   Prepare an entangled two qubits state, 
+   the phi-plus Bell-state, 
+   from the |00〉basis.
+*/
 quantum_kernel void prepare_bell_phi_plus() {
     /* Prepare both qubits in the |0> state */
     PrepZ(q[0]);
     PrepZ(q[1]);
-    /* Apply a Hadamard gate to the top qubit */
+    /*  Apply a Hadamard gate to qubit-0 */
     H(q[0]);
-    /* Apply a Controlled-NOT (CNOT) gate with the top qubit as
-    * the control and the bottom qubit as the target */
+    /*  
+       Apply a Controlled-NOT (CNOT) gate, 
+       with qubit-0 as the control, 
+       and qubit-1 as the target. 
+    */
     CNOT(q[0], q[1]);
-    /* Measure qubit 0 */
-    // MeasZ(q[0], control_read_out);
-    // /* Measure qubit 1 */
-    // MeasZ(q[1], target_read_out);
 }
 
+/* 
+   Measure the qubits.
+   Input 2 cbit variables addresses,
+   to accept the measurement readouts.
+*/
 quantum_kernel void qubit_measurement(cbit &control_read_out, cbit &target_read_out) {
-    /* Measure qubit 0 */
+    /* Measure qubit-0 */
     MeasZ(q[0], control_read_out);
-    /* Measure qubit 1 */
+    /* Measure qubit-1 */
     MeasZ(q[1], target_read_out);
 }
 
 int main() {
-    /* Configure the setting of the simulator. */
+    /* Configure the runtime env. */
     iqsdk::IqsConfig settings(2, "noiseless");
     iqsdk::FullStateSimulator quantum_8086(settings);
     if (iqsdk::QRT_ERROR_SUCCESS != quantum_8086.ready()) return 1;
-    /* Declare 2 measurement readouts */
-    /* Measurements are stored here as "classical bits" */
+
+    /* 
+       Declare 2 measurement readouts.
+       Measurements are stored here as "classical bits".
+    */
     cbit control_classical_bit;
     cbit target_classical_bit;
+
+    /* Prepare the phi-plus Bell-state. */
     prepare_bell_phi_plus();
+    /* Measure the qubits. */
     qubit_measurement(control_classical_bit, target_classical_bit);
-    /* Here we can use the FullStateSimulator APIs to get data */
-    /* or we can write classical logic that interacts with our measurement */
-    /* results, as below. */
+
+    /* 
+       Write classical logic that interacts with the measurement results.
+       Convert the cbit type to bool type.
+    */
     bool control_result = control_classical_bit;
     bool target_result = target_classical_bit;
 
     std::cout << "The Control Qubit is: ";
-    if (control_result) {
-        std::cout << "1\n";
-    }
-    else {
-        std::cout << "0\n";
-    }
-
+    std::cout << std::to_string(control_result) << std::endl;
     std::cout << "The Target Qubit is: ";
-    if (target_result) {
-        std::cout << "1\n";
-    }
-    else {
-        std::cout << "0\n";
-    }
+    std::cout << std::to_string(target_result) << std::endl;
+
     return 0;
 }
