@@ -36,7 +36,7 @@
 qbit q[2];
 /* The quantum logic must be in a function with the keyword quantum_kernel */
 /* pre-pended to the signature */
-quantum_kernel void prep_and_meas_bell(cbit &control_read_out, cbit &target_read_out) {
+quantum_kernel void prepare_bell_phi_plus() {
     /* Prepare both qubits in the |0> state */
     PrepZ(q[0]);
     PrepZ(q[1]);
@@ -46,25 +46,16 @@ quantum_kernel void prep_and_meas_bell(cbit &control_read_out, cbit &target_read
     * the control and the bottom qubit as the target */
     CNOT(q[0], q[1]);
     /* Measure qubit 0 */
+    // MeasZ(q[0], control_read_out);
+    // /* Measure qubit 1 */
+    // MeasZ(q[1], target_read_out);
+}
+
+quantum_kernel void qubit_measurement(cbit &control_read_out, cbit &target_read_out) {
+    /* Measure qubit 0 */
     MeasZ(q[0], control_read_out);
     /* Measure qubit 1 */
     MeasZ(q[1], target_read_out);
-
-    std::cout << "control_read_out: ";
-    if (control_read_out) {
-        std::cout << "1\n";
-    }
-    else {
-        std::cout << "0\n";
-    }
-
-    std::cout << "target_read_out: ";
-    if (target_read_out) {
-        std::cout << "1\n";
-    }
-    else {
-        std::cout << "0\n";
-    }
 }
 
 int main() {
@@ -76,7 +67,8 @@ int main() {
     /* Measurements are stored here as "classical bits" */
     cbit control_classical_bit;
     cbit target_classical_bit;
-    prep_and_meas_bell(control_classical_bit, target_classical_bit);
+    prepare_bell_phi_plus();
+    qubit_measurement(control_classical_bit, target_classical_bit);
     /* Here we can use the FullStateSimulator APIs to get data */
     /* or we can write classical logic that interacts with our measurement */
     /* results, as below. */

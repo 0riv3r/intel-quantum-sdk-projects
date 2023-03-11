@@ -1,65 +1,80 @@
 
 ########################################################################
-#      Date:           Thu 02 Feb 2023 05:39:52 AM PST
-#    Job ID:           2164571.v-qsvr-1.aidevcloud
+#      Date:           Sat 11 Mar 2023 04:25:40 AM PST
+#    Job ID:           2245523.v-qsvr-1.aidevcloud
 #      User:           u181733
 # Resources:           cput=75:00:00,neednodes=1:ppn=2,nodes=1:ppn=2,walltime=01:00:00
 ########################################################################
 
 ===============================================================================
-                       Intel(R) Quantum SDK (Beta Silver)
+                       Intel(R) Quantum SDK (V1.0)
 ===============================================================================
 Processing source file:
-/home/u181733/workspace/bell_state.cpp 
+/home/u181733/intel-quantum-sdk-projects/bell_state/bell_state.cpp 
 -------------------------------------------------------------------------------
 Intermediate representation (IR) output file: 
-/home/u181733/workspace/bell_state.ll
+/home/u181733/intel-quantum-sdk-projects/bell_state/bell_state.ll
 -------------------------------------------------------------------------------
 Transforming IR...
 Validating and processing quantum kernels...
 Printing quantum circuit stats before decomposition to native gates...
 
- Stats for QBB in quantum_kernel - '_Z18prep_and_meas_bellRS_'
+ Stats for QBB in quantum_kernel - 'prepare_bell_phi_plus()'
 
-	Total number of gates: 6
+	Total number of gates: 4
 		Total number of H gates: 1
 		Total number of CNOT gates: 1
 		Total number of PrepZ gates: 2
+
+	Approximate depth: 3 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - '_Z17qubit_measurementRS_'
+
+	Total number of gates: 2
 		Total number of MeasZ gates: 2
 
-	Approximate depth: 560 time units
-		(with an average gate time of 140 time units)
+	Approximate depth: 1 time units
+		(with an average gate time of 1 time units)
 
 -------------------------------------------------------------------------------
 Optimizing using option 0...
 Printing quantum circuit stats after decomposition to native gates...
 
- Stats for QBB in quantum_kernel - '_Z18prep_and_meas_bellRS_'
+ Stats for QBB in quantum_kernel - 'prepare_bell_phi_plus()'
 
-	Total number of gates: 9
+	Total number of gates: 7
 		Total number of SpinRotXY gates: 4
 		Total number of SpinCPhase gates: 1
-		Total number of SpinMeasZ gates: 2
 		Total number of SpinPrepZ gates: 2
 
-	Approximate depth: 901 time units
-		(with an average gate time of 140 time units)
+	Approximate depth: 5 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - '_Z17qubit_measurementRS_'
+
+	Total number of gates: 2
+		Total number of SpinMeasZ gates: 2
+
+	Approximate depth: 1 time units
+		(with an average gate time of 1 time units)
 
 -------------------------------------------------------------------------------
 Finalizing quantum IR...
+WARNING: Quantum SDK - Scheduling method is set to 'none'. Ignoring the platform configuration and assuming an all-to-all connectivity for the qubits.
 -------------------------------------------------------------------------------
 Generating quantum object file...
 Compiling and linking to executable...
 Final executable file: 
-/home/u181733/workspace/bell_state
+/home/u181733/intel-quantum-sdk-projects/bell_state/bell_state
 -------------------------------------------------------------------------------
-control_read_out: 0
-target_read_out: 0
-The Control Qubit is: 0
-The Target Qubit is: 0
+The Control Qubit is: 1
+The Target Qubit is: 1
 
 ########################################################################
-# End of output for job 2164571.v-qsvr-1.aidevcloud
-# Date: Thu 02 Feb 2023 05:40:02 AM PST
+# End of output for job 2245523.v-qsvr-1.aidevcloud
+# Date: Sat 11 Mar 2023 04:25:54 AM PST
 ########################################################################
 
