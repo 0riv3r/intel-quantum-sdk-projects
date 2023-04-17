@@ -1,0 +1,15 @@
+#!/bin/bash
+## -N is name of job
+#PBS -N swap_job_output
+#PBS -l walltime=01:00:00
+## merge standard out and error
+#PBS -j oe
+## resource request
+#PBS -l nodes=1:ppn=2
+## change to submission directory
+cd $PBS_O_WORKDIR
+ 
+## compile the program with verbose output
+/glob/development-tools/intel-quantum-sdk/intel-quantum-compiler -v swap.cpp
+## run the executable
+./swap
