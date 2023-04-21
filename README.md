@@ -2,6 +2,9 @@
 Launch the SDK README at:
         /glob/development-tools/intel-quantum-sdk/README
 
+Examples at:
+        /glob/development-tools/intel-quantum-sdk/quantum-examples/
+
 ## SDK Version
         u181733@login-2:~/workspace$ /glob/development-tools/intel-quantum-sdk/intel-quantum-compiler -h
 
