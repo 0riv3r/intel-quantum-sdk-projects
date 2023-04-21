@@ -1,0 +1,184 @@
+
+########################################################################
+#      Date:           Fri 21 Apr 2023 01:19:17 PM PDT
+#    Job ID:           2282380.v-qsvr-1.aidevcloud
+#      User:           u181733
+# Resources:           cput=75:00:00,neednodes=1:ppn=2,nodes=1:ppn=2,walltime=01:00:00
+########################################################################
+
+===============================================================================
+                       Intel(R) Quantum SDK (V1.0)
+===============================================================================
+Processing source file:
+/home/u181733/intel-quantum-sdk-projects/teleportation/teleportation.cpp 
+-------------------------------------------------------------------------------
+Intermediate representation (IR) output file: 
+/home/u181733/intel-quantum-sdk-projects/teleportation/teleportation.ll
+-------------------------------------------------------------------------------
+Transforming IR...
+Validating and processing quantum kernels...
+Printing quantum circuit stats before decomposition to native gates...
+
+ Stats for QBB in quantum_kernel - 'qubits_initialize()'
+
+	Total number of gates: 3
+		Total number of PrepZ gates: 3
+
+	Approximate depth: 1 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'prepare_bell_phi_plus()'
+
+	Total number of gates: 2
+		Total number of H gates: 1
+		Total number of CNOT gates: 1
+
+	Approximate depth: 2 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'prepare_data_qbit()'
+
+	Total number of gates: 1
+		Total number of RX gates: 1
+
+	Approximate depth: 1 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'teleportation_sender()'
+
+	Total number of gates: 2
+		Total number of H gates: 1
+		Total number of CNOT gates: 1
+
+	Approximate depth: 2 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'measure_alice_qubits()'
+
+	Total number of gates: 2
+		Total number of MeasZ gates: 2
+
+	Approximate depth: 1 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'x_bob_entangled()'
+
+	Total number of gates: 1
+		Total number of X gates: 1
+
+	Approximate depth: 1 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'z_bob_entangled()'
+
+	Total number of gates: 1
+		Total number of Z gates: 1
+
+	Approximate depth: 1 time units
+		(with an average gate time of 1 time units)
+
+-------------------------------------------------------------------------------
+Optimizing using option 0...
+Printing quantum circuit stats after decomposition to native gates...
+
+ Stats for QBB in quantum_kernel - 'qubits_initialize()'
+
+	Total number of gates: 3
+		Total number of SpinPrepZ gates: 3
+
+	Approximate depth: 1 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'prepare_bell_phi_plus()'
+
+	Total number of gates: 5
+		Total number of SpinRotXY gates: 4
+		Total number of SpinCPhase gates: 1
+
+	Approximate depth: 4 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'prepare_data_qbit()'
+
+	Total number of gates: 1
+		Total number of SpinRotXY gates: 1
+
+	Approximate depth: 1 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'teleportation_sender()'
+
+	Total number of gates: 5
+		Total number of SpinRotXY gates: 4
+		Total number of SpinCPhase gates: 1
+
+	Approximate depth: 4 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'measure_alice_qubits()'
+
+	Total number of gates: 2
+		Total number of SpinMeasZ gates: 2
+
+	Approximate depth: 1 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'x_bob_entangled()'
+
+	Total number of gates: 1
+		Total number of SpinRotXY gates: 1
+
+	Approximate depth: 1 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'z_bob_entangled()'
+
+	Total number of gates: 1
+		Total number of SpinRotZ gates: 1
+
+	Approximate depth: 1 time units
+		(with an average gate time of 1 time units)
+
+-------------------------------------------------------------------------------
+Finalizing quantum IR...
+WARNING: Quantum SDK - Scheduling method is set to 'none'. Ignoring the platform configuration and assuming an all-to-all connectivity for the qubits.
+-------------------------------------------------------------------------------
+Generating quantum object file...
+Compiling and linking to executable...
+Final executable file: 
+/home/u181733/intel-quantum-sdk-projects/teleportation/teleportation
+-------------------------------------------------------------------------------
+
+The data qubit state before teleportation:
+Printing amplitude map of size 2
+|000>   : (0.8776,0)                    |100>   : (0,-0.4794)                   
+
+
+Bob's state immediately after Alice's measurement:
+Printing amplitude map of size 2
+|010>   : (2.687e-05,0.4795)            |011>   : (-0.8776,6.116e-05)           
+
+Applying X
+
+Bob's state after corrections have been applied:
+Printing amplitude map of size 2
+|010>   : (6.116e-05,0.8776)            |011>   : (0.4794,-2.687e-05)           
+
+
+########################################################################
+# End of output for job 2282380.v-qsvr-1.aidevcloud
+# Date: Fri 21 Apr 2023 01:19:28 PM PDT
+########################################################################
+

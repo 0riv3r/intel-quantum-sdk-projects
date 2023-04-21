@@ -1,13 +1,13 @@
 /*
-    Quantum Teleportation
+   Quantum Teleportation
 
-    page #26 in the "Quantum Computation and Quantum Information" book.
+   page #26 in the "Quantum Computation and Quantum Information" book.
 
     
 
-    |0⟩ ---[H]--o---
+   |0⟩ ---[H]--o---
                 |
-    |0⟩ --------⊕---
+   |0⟩ --------⊕---
 
 */
 
@@ -15,10 +15,33 @@
 #include <clang/Quantum/quintrinsics.h>
 /* Quantum Runtime Library APIs */
 #include <quantum.hpp>
+
 #include <iostream>
+#define _USE_MATH_DEFINES
+#include <cmath>
 
 /* Declare 3 qubits */
-qbit q[3];
+qbit q_state_data;
+qbit q_alice_entangled;
+qbit q_bob_entangled;
+
+/* 
+   Declare 3 measurement readouts 
+   Measurements are stored here as "classical bits".
+*/
+cbit c_state_data;
+cbit c_alice_entangled;
+cbit c_bob_entangled;
+
+/* 
+   initialize all the qubits.
+   Prepare the qubits in the |0> state
+*/
+quantum_kernel void qubits_initialize() {
+   PrepZ(q_state_data);
+   PrepZ(q_alice_entangled);
+   PrepZ(q_bob_entangled);
+}
 
 /* 
    Prepare an entangled two qubits state, 
@@ -26,85 +49,115 @@ qbit q[3];
    from the |00〉basis.
 */
 quantum_kernel void prepare_bell_phi_plus() {
-    /* Prepare both of Alice qubits in the |0> state */
-    PrepZ(q[1]);
-    PrepZ(q[2]);
-    /*  Apply a Hadamard gate to qubit-1 */
-    H(q[1]);
-    /*  
-       Apply a Controlled-NOT (CNOT) gate, 
-       with qubit-1 as the control, 
-       and qubit-2 as the target. 
-    */
-    CNOT(q[1], q[2]);
-}
-
-quantum_kernel void teleportation() {
-    /* 
-      Prepare a third qubit, psi, in the |0> state, 
-      that holds the data to teleport.
-    */
-    PrepZ(q[0]);
-
-    /*  
-       Apply a Controlled-NOT (CNOT) gate, 
-       with qubit-0 (psi) as the control, 
-       and qubit-1 as the target. 
-    */
-    CNOT(q[0], q[1]);
-
-    /*  Apply a Hadamard gate to qubit-0 */
-    H(q[0]);
+   /*  Apply a Hadamard gate to q_state_data */
+   H(q_alice_entangled);
+   /*  
+      Apply a Controlled-NOT (CNOT) gate, 
+      with qubit q_state_data as the control, 
+      and qubit q_alice_entangled as the target. 
+   */
+   CNOT(q_alice_entangled, q_bob_entangled);
 }
 
 /* 
-   Measure the qubits.
-   Input 3 cbit variables addresses,
-   to accept the measurement readouts.
+   Prepare a third qubit with state data
+   to be teleported.
 */
-quantum_kernel void qubit_measurement(cbit &psi, cbit &alice_entangled_1, cbit &bob_entangled_2) {
-    /* Measure qubit-0 */
-    MeasZ(q[0], psi);
-    /* Measure qubit-1 */
-    MeasZ(q[1], alice_entangled_1);
-    /* Measure qubit-2 */
-    MeasZ(q[2], bob_entangled_2);
+quantum_kernel void prepare_data_qbit() {
+   /*
+      Set the qubit quantum state using an X rotation gate
+      with PI/2 angle.
+   */
+   RX(q_state_data, 1);
+   //RX(q_state_data, M_PI_2);
+}
+
+quantum_kernel void teleportation_sender() {
+   /*  
+      Apply a Controlled-NOT (CNOT) gate, 
+      with the state-data qubit (q_state_data) as the control, 
+      and the sender's (Alice) entangled qubit (q_alice_entangled) as the target. 
+   */
+   CNOT(q_state_data, q_alice_entangled);
+
+   /*  Apply a Hadamard gate to the state-data qubit (q_data) */
+   H(q_state_data);
+}
+
+// Alice measures her two qbits.
+quantum_kernel void measure_alice_qubits() {
+  MeasZ(q_state_data, c_state_data);
+  MeasZ(q_alice_entangled, c_alice_entangled);
+}
+
+// Corrections are invoked from the top level, so they must be wrapped in
+// individual quantum_kernels
+quantum_kernel void x_bob_entangled() {
+  X(q_bob_entangled);
+}
+quantum_kernel void z_bob_entangled() {
+  Z(q_bob_entangled);
 }
 
 int main() {
-    /* Configure the runtime env. */
-    iqsdk::IqsConfig settings(2, "noiseless");
-    iqsdk::FullStateSimulator quantum_8086(settings);
-    if (iqsdk::QRT_ERROR_SUCCESS != quantum_8086.ready()) return 1;
+   using namespace iqsdk;
 
-    /* 
-       Declare 3 measurement readouts.
-       Measurements are stored here as "classical bits".
-    */
-    cbit c[3];
+   /* Configure the simulator */
+   IqsConfig iqs_config(/*num_qubits*/ 3,
+                       /*simulation_type*/ "noiseless");
+   FullStateSimulator iqs_device(iqs_config);
+   if (QRT_ERROR_SUCCESS != iqs_device.ready()) {
+      std::printf("Device not ready\n");
+      return 1;
+   }
 
-    /* Prepare the phi-plus Bell-state. */
-    prepare_bell_phi_plus();
+   // Structures for reporting probabilities and amplitudes.
+   std::vector<std::reference_wrapper<qbit>> qids = {
+         std::ref(q_state_data), std::ref(q_alice_entangled), std::ref(q_bob_entangled)};
+   QssMap<double> probability_map;
+   QssMap<std::complex<double>> amplitude_map;
 
-    teleportation();
+   qubits_initialize();
+   prepare_data_qbit();
 
-    /* Measure the qubits. */
-    qubit_measurement(c[0], c[1], c[2]);
+   std::cout << "\nThe data qubit state before teleportation:\n";
+   // Only display non-zero amplitudes above 0.01
+   amplitude_map = iqs_device.getAmplitudes(qids, {}, 0.01);
+   FullStateSimulator::displayAmplitudes(amplitude_map);
 
-    /* 
-       Write classical logic that interacts with the measurement results.
-       Convert the cbit type to bool type.
-    */
-    bool psi_result = c[0];
-    bool alice_entangled_1 = c[1];
-    bool bob_entangled_2 = c[2];
+   prepare_bell_phi_plus();
+   teleportation_sender();
 
-    std::cout << "The psi Qubit is: ";
-    std::cout << std::to_string(psi_result) << std::endl;
-    std::cout << "The entangled_1 Qubit is: ";
-    std::cout << std::to_string(alice_entangled_1) << std::endl;
-    std::cout << "The entangled_2 Qubit is: ";
-    std::cout << std::to_string(bob_entangled_2) << std::endl;
+   /* Measure alice's qubits. */
+   measure_alice_qubits();
 
-    return 0;
+   std::cout << "\nBob's state immediately after Alice's measurement:\n";
+   // When we look at the state vector, we see that Alice's two qubits
+   // have in fact been measured, and have collapsed so there are only two
+   // non-zero amplitudes.
+   amplitude_map = iqs_device.getAmplitudes(qids, {}, 0.01/*threshold--only display non-zero amplitudes*/);
+   FullStateSimulator::displayAmplitudes(amplitude_map);
+   
+   // Now we apply corrections, using the results of alice's measurement to
+   // decide on which corrections to apply.
+   if (c_alice_entangled) {
+      std::cout << "Applying X\n";
+      x_bob_entangled();
+   }
+   if (c_state_data) {
+      std::cout << "Applying Z\n";
+      z_bob_entangled();
+   }
+
+   // After applying these corrections, we can project out the relevant
+   // amplitudes and should get the same result as Alice's original prepared
+   // state, up to a global phase
+   std::cout << "\nBob's state after corrections have been applied:\n";
+   // `bases` will expand into |c_state_data c_alice_entangled 0> and |c_state_data c_alice_entangled 1>
+   std::vector<int> pattern = {c_state_data, c_alice_entangled, QssIndex::Wildcard};
+   std::vector<QssIndex> bases = QssIndex::patternToIndices(pattern);
+   amplitude_map = iqs_device.getAmplitudes(qids, bases);
+   FullStateSimulator::displayAmplitudes(amplitude_map);
+
+   return 0;
 }

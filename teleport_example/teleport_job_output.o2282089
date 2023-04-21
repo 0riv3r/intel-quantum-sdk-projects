@@ -1,0 +1,219 @@
+
+########################################################################
+#      Date:           Fri 21 Apr 2023 02:16:48 AM PDT
+#    Job ID:           2282089.v-qsvr-1.aidevcloud
+#      User:           u181733
+# Resources:           cput=75:00:00,neednodes=1:ppn=2,nodes=1:ppn=2,walltime=01:00:00
+########################################################################
+
+===============================================================================
+                       Intel(R) Quantum SDK (V1.0)
+===============================================================================
+Processing source file:
+/home/u181733/intel-quantum-sdk-projects/teleport_example/teleport.cpp 
+-------------------------------------------------------------------------------
+Intermediate representation (IR) output file: 
+/home/u181733/intel-quantum-sdk-projects/teleport_example/teleport.ll
+-------------------------------------------------------------------------------
+Transforming IR...
+Validating and processing quantum kernels...
+Printing quantum circuit stats before decomposition to native gates...
+
+ Stats for QBB in quantum_kernel - 'alicePrepState()'
+
+	Total number of gates: 4
+		Total number of RX gates: 1
+		Total number of PrepZ gates: 3
+
+	Approximate depth: 2 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'aliceProtocol()'
+
+	Total number of gates: 6
+		Total number of H gates: 2
+		Total number of CNOT gates: 2
+		Total number of PrepZ gates: 2
+
+	Approximate depth: 5 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'measAlice()'
+
+	Total number of gates: 2
+		Total number of MeasZ gates: 2
+
+	Approximate depth: 1 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'xBob()'
+
+	Total number of gates: 1
+		Total number of X gates: 1
+
+	Approximate depth: 1 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'zBob()'
+
+	Total number of gates: 1
+		Total number of Z gates: 1
+
+	Approximate depth: 1 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'bobCorrections()'
+
+	Total number of gates: 2
+		Total number of CNOT gates: 1
+		Total number of CZ gates: 1
+
+	Approximate depth: 2 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'teleportCircuit()'
+
+	Total number of gates: 14
+		Total number of H gates: 2
+		Total number of RX gates: 1
+		Total number of CNOT gates: 3
+		Total number of CZ gates: 1
+		Total number of PrepZ gates: 5
+		Total number of MeasZ gates: 2
+
+	Approximate depth: 8 time units
+		(with an average gate time of 1 time units)
+
+-------------------------------------------------------------------------------
+Optimizing using option 0...
+Printing quantum circuit stats after decomposition to native gates...
+
+ Stats for QBB in quantum_kernel - 'alicePrepState()'
+
+	Total number of gates: 4
+		Total number of SpinRotXY gates: 1
+		Total number of SpinPrepZ gates: 3
+
+	Approximate depth: 2 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'aliceProtocol()'
+
+	Total number of gates: 12
+		Total number of SpinRotXY gates: 8
+		Total number of SpinCPhase gates: 2
+		Total number of SpinPrepZ gates: 2
+
+	Approximate depth: 8 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'measAlice()'
+
+	Total number of gates: 2
+		Total number of SpinMeasZ gates: 2
+
+	Approximate depth: 1 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'xBob()'
+
+	Total number of gates: 1
+		Total number of SpinRotXY gates: 1
+
+	Approximate depth: 1 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'zBob()'
+
+	Total number of gates: 1
+		Total number of SpinRotZ gates: 1
+
+	Approximate depth: 1 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'bobCorrections()'
+
+	Total number of gates: 4
+		Total number of SpinRotXY gates: 2
+		Total number of SpinCPhase gates: 2
+
+	Approximate depth: 4 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - 'teleportCircuit()'
+
+	Total number of gates: 22
+		Total number of SpinRotXY gates: 11
+		Total number of SpinCPhase gates: 4
+		Total number of SpinMeasZ gates: 2
+		Total number of SpinPrepZ gates: 5
+
+	Approximate depth: 12 time units
+		(with an average gate time of 1 time units)
+
+-------------------------------------------------------------------------------
+Finalizing quantum IR...
+WARNING: Quantum SDK - Scheduling method is set to 'none'. Ignoring the platform configuration and assuming an all-to-all connectivity for the qubits.
+-------------------------------------------------------------------------------
+Generating quantum object file...
+Compiling and linking to executable...
+Final executable file: 
+/home/u181733/intel-quantum-sdk-projects/teleport_example/teleport
+-------------------------------------------------------------------------------
+
+==Alice's state before teleportation==
+Printing amplitude map of size 2
+|000>   : (0.8776,0)                    |100>   : (0,-0.4794)                   
+
+
+==Alice's corresponding probability distribution==
+Printing probability map of size 2
+|0>     : 0.7702                        |1>     : 0.2298                        
+
+
+==Alice's state before measAlice()==
+Printing amplitude map of size 8
+|000>   : (-0.4388,8.608e-05)           |100>   : (-0.4388,-1.95e-06)           
+|010>   : (1.344e-05,0.2397)            |110>   : (-3.253e-05,-0.2397)          
+|001>   : (-2.298e-05,0.2397)           |101>   : (4.596e-05,-0.2397)           
+|011>   : (-0.4388,3.058e-05)           |111>   : (-0.4388,1.149e-05)           
+
+
+==Bob's state immediately after measurement==
+Printing amplitude map of size 2
+|100>   : (-0.8776,-3.9e-06)            |101>   : (9.192e-05,-0.4794)           
+
+
+==Bob's corresponding probability distribution==
+Printing probability map of size 2
+|0>     : 0.7702                        |1>     : 0.2298                        
+
+Applying Z
+
+==Bob's state after corrections have been applied==
+Printing amplitude map of size 2
+|100>   : (-4.597e-05,0.8776)           |101>   : (0.4794,6.894e-05)            
+
+
+==Bob's corresponding probability distribution==
+Printing probability map of size 2
+|0>     : 0.7702                        |1>     : 0.2298                        
+
+
+########################################################################
+# End of output for job 2282089.v-qsvr-1.aidevcloud
+# Date: Fri 21 Apr 2023 02:17:01 AM PDT
+########################################################################
+
