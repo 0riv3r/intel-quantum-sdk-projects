@@ -1,7 +1,7 @@
 
 ########################################################################
-#      Date:           Fri 21 Apr 2023 01:17:12 PM PDT
-#    Job ID:           2282379.v-qsvr-1.aidevcloud
+#      Date:           Sat 22 Apr 2023 02:05:28 AM PDT
+#    Job ID:           2282601.v-qsvr-1.aidevcloud
 #      User:           u181733
 # Resources:           cput=75:00:00,neednodes=1:ppn=2,nodes=1:ppn=2,walltime=01:00:00
 ########################################################################
@@ -163,22 +163,22 @@ Final executable file:
 
 The data qubit state before teleportation:
 Printing amplitude map of size 2
-|000>   : (0.7071,0)                    |100>   : (0,-0.7071)                   
+|000>   : (0.8776,0)                    |100>   : (0,-0.4794)                   
 
 
 Bob's state immediately after Alice's measurement:
 Printing amplitude map of size 2
-|100>   : (-0.7072,-3.39e-05)           |101>   : (0.0001356,-0.7071)           
+|010>   : (2.687e-05,0.4795)            |011>   : (-0.8776,6.116e-05)           
 
-Applying Z
+Applying X
 
 Bob's state after corrections have been applied:
 Printing amplitude map of size 2
-|100>   : (-6.78e-05,0.7072)            |101>   : (0.7071,0.0001017)            
+|000>   : (0,0)                         |100>   : (0,0)                         
 
 
 ########################################################################
-# End of output for job 2282379.v-qsvr-1.aidevcloud
-# Date: Fri 21 Apr 2023 01:17:23 PM PDT
+# End of output for job 2282601.v-qsvr-1.aidevcloud
+# Date: Sat 22 Apr 2023 02:05:46 AM PDT
 ########################################################################
 

@@ -68,7 +68,7 @@ quantum_kernel void prepare_data_qbit() {
       Set the qubit quantum state using an X rotation gate
       with PI/2 angle.
    */
-   RX(q_state_data, 1);
+   //RX(q_state_data, 1);
    //RX(q_state_data, M_PI_2);
 }
 
@@ -111,22 +111,88 @@ int main() {
       return 1;
    }
 
-   // Structures for reporting probabilities and amplitudes.
+   /*
+      Structures for reporting probabilities and amplitudes.
+      Set references to qbit ids before scheduling.
+   */
    std::vector<std::reference_wrapper<qbit>> qids = {
          std::ref(q_state_data), std::ref(q_alice_entangled), std::ref(q_bob_entangled)};
+
+   // use string constructor of Quantum State Space index to choose which
+   // basis states' data is retrieved
+   iqsdk::QssIndex state_a("|000>");
+   iqsdk::QssIndex state_b("|100>");
+   std::vector<iqsdk::QssIndex> origin_bases;
+   origin_bases.push_back(state_a);
+   origin_bases.push_back(state_b);
+   
    QssMap<double> probability_map;
    QssMap<std::complex<double>> amplitude_map;
 
    qubits_initialize();
-   prepare_data_qbit();
 
-   std::cout << "\nThe data qubit state before teleportation:\n";
-   // Only display non-zero amplitudes above 0.01
-   amplitude_map = iqs_device.getAmplitudes(qids, {}, 0.01);
+   std::cout << "\nGlobal state immediately after qubits_initialize:\n";
+   // When we look at the state vector, we see that Alice's two qubits
+   // have in fact been measured, and have collapsed so there are only two
+   // non-zero amplitudes.
+   amplitude_map = iqs_device.getAmplitudes( qids, 
+                                             {}
+                                             //, 0.01/*threshold--only display non-zero amplitudes*/
+                                             );
    FullStateSimulator::displayAmplitudes(amplitude_map);
 
+   prepare_data_qbit();
+
+   std::cout << "\nGlobal state immediately after prepare_data_qbit:\n";
+   // When we look at the state vector, we see that Alice's two qubits
+   // have in fact been measured, and have collapsed so there are only two
+   // non-zero amplitudes.
+   amplitude_map = iqs_device.getAmplitudes( qids, 
+                                             {}
+                                             //, 0.01/*threshold--only display non-zero amplitudes*/
+                                             );
+   FullStateSimulator::displayAmplitudes(amplitude_map);
+
+   // std::cout << "\nThe data qubit state before teleportation:\n";
+   // // Only display non-zero amplitudes above 0.01
+   // amplitude_map = iqs_device.getAmplitudes(qids,  /*set of id values to refer to the qubits by*/
+   //                                          origin_bases /* Since the qubits, apart of the q_state_data qubit,
+   //                                                          are in |0> state, meaning that they are orthogonal
+   //                                                          to the q_state_data qubit, we can set the bases as
+   //                                                          the q_state_data qubit bases since they have only the 
+   //                                                          q_state_data qubit values.
+   //                                                       */ 
+   //                                          /*, 0.01        threshold--only display non-zero amplitudes.
+   //                                                          Not required here, since I can use the 'bases'
+   //                                                          parameter, which is more efficient in time than 
+   //                                                          the threshold that requires calculation.
+   //                                                       */
+   //                                          );
+   // FullStateSimulator::displayAmplitudes(amplitude_map);
+   
    prepare_bell_phi_plus();
+
+   std::cout << "\nGlobal state immediately after the entanglement of Alice's and Bob's qubits:\n";
+   // When we look at the state vector, we see that Alice's two qubits
+   // have in fact been measured, and have collapsed so there are only two
+   // non-zero amplitudes.
+   amplitude_map = iqs_device.getAmplitudes( qids, 
+                                             {}
+                                             //, 0.01/*threshold--only display non-zero amplitudes*/
+                                             );
+   FullStateSimulator::displayAmplitudes(amplitude_map);
+
    teleportation_sender();
+
+   std::cout << "\nGlobal state immediately after teleportation:\n";
+   // When we look at the state vector, we see that Alice's two qubits
+   // have in fact been measured, and have collapsed so there are only two
+   // non-zero amplitudes.
+   amplitude_map = iqs_device.getAmplitudes( qids, 
+                                             {}
+                                             //, 0.01/*threshold--only display non-zero amplitudes*/
+                                             );
+   FullStateSimulator::displayAmplitudes(amplitude_map);
 
    /* Measure alice's qubits. */
    measure_alice_qubits();
@@ -135,7 +201,10 @@ int main() {
    // When we look at the state vector, we see that Alice's two qubits
    // have in fact been measured, and have collapsed so there are only two
    // non-zero amplitudes.
-   amplitude_map = iqs_device.getAmplitudes(qids, {}, 0.01/*threshold--only display non-zero amplitudes*/);
+   amplitude_map = iqs_device.getAmplitudes( qids, 
+                                             {}
+                                             //, 0.01/*threshold--only display non-zero amplitudes*/
+                                             );
    FullStateSimulator::displayAmplitudes(amplitude_map);
    
    // Now we apply corrections, using the results of alice's measurement to
@@ -153,10 +222,31 @@ int main() {
    // amplitudes and should get the same result as Alice's original prepared
    // state, up to a global phase
    std::cout << "\nBob's state after corrections have been applied:\n";
-   // `bases` will expand into |c_state_data c_alice_entangled 0> and |c_state_data c_alice_entangled 1>
+   // `result_bases` will expand into |c_state_data c_alice_entangled 0> and |c_state_data c_alice_entangled 1>
    std::vector<int> pattern = {c_state_data, c_alice_entangled, QssIndex::Wildcard};
-   std::vector<QssIndex> bases = QssIndex::patternToIndices(pattern);
-   amplitude_map = iqs_device.getAmplitudes(qids, bases);
+   std::vector<QssIndex> result_bases = QssIndex::patternToIndices(pattern);
+   //amplitude_map = iqs_device.getAmplitudes(qids, result_bases);
+
+   iqsdk::QssIndex state_test_1("|000>");
+   iqsdk::QssIndex state_test_2("|001>");
+   iqsdk::QssIndex state_test_3("|010>");
+   iqsdk::QssIndex state_test_4("|011>");
+   iqsdk::QssIndex state_test_5("|100>");
+   iqsdk::QssIndex state_test_6("|101>");
+   iqsdk::QssIndex state_test_7("|110>");
+   iqsdk::QssIndex state_test_8("|111>");
+   std::vector<iqsdk::QssIndex> test_bases;
+   test_bases.push_back(state_test_1);
+   test_bases.push_back(state_test_2);
+   test_bases.push_back(state_test_3);
+   test_bases.push_back(state_test_4);
+   test_bases.push_back(state_test_5);
+   test_bases.push_back(state_test_6);
+   test_bases.push_back(state_test_7);
+   test_bases.push_back(state_test_8);
+
+
+   amplitude_map = iqs_device.getAmplitudes(qids, test_bases);
    FullStateSimulator::displayAmplitudes(amplitude_map);
 
    return 0;
