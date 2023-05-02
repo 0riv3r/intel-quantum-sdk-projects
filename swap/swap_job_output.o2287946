@@ -1,0 +1,85 @@
+
+########################################################################
+#      Date:           Tue 02 May 2023 11:55:40 AM PDT
+#    Job ID:           2287946.v-qsvr-1.aidevcloud
+#      User:           u181733
+# Resources:           cput=75:00:00,neednodes=1:ppn=2,nodes=1:ppn=2,walltime=01:00:00
+########################################################################
+
+===============================================================================
+                       Intel(R) Quantum SDK (V1.0)
+===============================================================================
+Processing source file:
+/home/u181733/intel-quantum-sdk-projects/swap/swap.cpp 
+-------------------------------------------------------------------------------
+Intermediate representation (IR) output file: 
+/home/u181733/intel-quantum-sdk-projects/swap/swap.ll
+-------------------------------------------------------------------------------
+Transforming IR...
+Validating and processing quantum kernels...
+Printing quantum circuit stats before decomposition to native gates...
+
+ Stats for QBB in quantum_kernel - 'swap_qbits()'
+
+	Total number of gates: 6
+		Total number of X gates: 1
+		Total number of CNOT gates: 3
+		Total number of PrepZ gates: 2
+
+	Approximate depth: 5 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - '_Z17qubit_measurementRS_'
+
+	Total number of gates: 2
+		Total number of MeasZ gates: 2
+
+	Approximate depth: 1 time units
+		(with an average gate time of 1 time units)
+
+-------------------------------------------------------------------------------
+Optimizing using option 0...
+Printing quantum circuit stats after decomposition to native gates...
+
+ Stats for QBB in quantum_kernel - 'swap_qbits()'
+
+	Total number of gates: 12
+		Total number of SpinRotXY gates: 7
+		Total number of SpinCPhase gates: 3
+		Total number of SpinPrepZ gates: 2
+
+	Approximate depth: 8 time units
+		(with an average gate time of 1 time units)
+
+
+ Stats for QBB in quantum_kernel - '_Z17qubit_measurementRS_'
+
+	Total number of gates: 2
+		Total number of SpinMeasZ gates: 2
+
+	Approximate depth: 1 time units
+		(with an average gate time of 1 time units)
+
+-------------------------------------------------------------------------------
+Finalizing quantum IR...
+WARNING: Quantum SDK - Scheduling method is set to 'none'. Ignoring the platform configuration and assuming an all-to-all connectivity for the qubits.
+-------------------------------------------------------------------------------
+Generating quantum object file...
+Compiling and linking to executable...
+Final executable file: 
+/home/u181733/intel-quantum-sdk-projects/swap/swap
+-------------------------------------------------------------------------------
+Initial qubits states:
+q[0] is |1>
+q[1] is |0>
+
+Qubits states after swap function:
+q[0] is |0>
+q[1] is |1>
+
+########################################################################
+# End of output for job 2287946.v-qsvr-1.aidevcloud
+# Date: Tue 02 May 2023 11:55:52 AM PDT
+########################################################################
+
